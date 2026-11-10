@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAPAS - Student Academic Performance Analysis</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📊 Student Academic Performance Analysis System</h1>
+            <p>Version 3 - Web Interface</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="dashboard">
+            <div class="welcome-section">
+                <h2>Welcome</h2>
+                <p>Student Academic Performance Analysis System</p>
+                <p>Manages student records, processes examination marks, and analyzes academic performance.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-students">Loading...</div>
+                    <div class="stat-label">Total Students</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="total-units">Loading...</div>
+                    <div class="stat-label">Total Units</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="class-avg">Loading...</div>
+                    <div class="stat-label">Class Average</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="pass-rate">Loading...</div>
+                    <div class="stat-label">Pass Rate</div>
+                </div>
+            </div>
+
+            <div class="charts-section">
+                <h3>Grade Distribution</h3>
+                <div class="grade-chart">
+                    <canvas id="gradeChart"></canvas>
+                </div>
+                <div class="unit-performance">
+                    <h4>Unit Performance Comparison</h4>
+                    <canvas id="unitChart"></canvas>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <a href="/students" class="btn">View Students</a>
+                <a href="/units" class="btn">View Units</a>
+                <a href="/marks" class="btn">Enter Marks</a>
+                <a href="/reports" class="btn">Generate Reports</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Student Academic Performance Analysis System (SAPAS) - Version 3</p>
+            <p>Introduction to Python Academic Project</p>
+        </div>
+    </footer>
+
+    <script src="../static/app.js"></script>
+</body>
+</html>

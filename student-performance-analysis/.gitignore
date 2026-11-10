@@ -1,0 +1,28 @@
+# Student Academic Performance Analysis System (SAPAS) - Gitignore
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Data files (generated at runtime - not tracked in git)
+data/students.json
+data/units.json
+data/marks.json
+
+# Reports (generated at runtime)
+reports/*.txt
+
+# Environment variables (if any)
+.env
+
+# IDE specific
+.vscode/
+.idea/
+*.swp
+*.swn
+
+# OS specific
+.DS_Store
