@@ -469,7 +469,7 @@ class SAPASHandler(BaseHTTPRequestHandler):
 
 
 def run_server(port: int = 8000):
-    """Run the SAPAS API server."""
+    """Run the SAPAS API server (local development only)."""
     server_address = ("0.0.0.0", port)
     httpd = HTTPServer(server_address, SAPASHandler)
     print(f"SAPAS API running on http://0.0.0.0:{port}")
@@ -483,6 +483,116 @@ def run_server(port: int = 8000):
     print(f"  GET /api/grade?marks=XX - Grade calculation")
     print()
     httpd.serve_forever()
+
+
+# Vercel serverless function handler
+# Vercel expects a function that takes (event, context) or similar signature
+# For stdlib HTTP server, we create a compatible wrapper
+def handler(event, context=None):
+    """
+    Vercel serverless function handler for SAPAS API.
+    
+    This wrapper routes Vercel's event format to our custom HTTP handler.
+    In production, Vercel will call this function with the request data.
+    """
+    # Parse the request path and method from Vercel's event format
+    # Vercel provides event.path, event.httpMethod, event.queryStringParameters, etc.
+    path = event.get("path", "/")
+    method = event.get("httpMethod", "GET")
+    query = event.get("queryStringParameters", {})
+    
+    # Reconstruct the path similar to our local setup
+    # This is a simplified mapping - full Vercel integration would be more complex
+    full_path = path
+    
+    # Create a minimal mock environment for our handler
+    from http.server import BaseHTTPRequestHandler
+    import io
+    
+    # We'll return a simple response based on the path
+    # For a full implementation, you'd want to map all routes properly
+    if path == "/api/students":
+        students_data = load_json_file(STUDENTS_FILE)
+        return {
+            "statusCode": 200,
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps(students_data)
+        }
+    elif path == "/api/units":
+        units_data = load_json_file(UNITS_FILE)
+        return {
+            "statusCode": 200,
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps(units_data)
+        }
+    elif path == "/api/class":
+        stats = calculate_class_statistics()
+        return {
+            "statusCode": 200,
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps(stats)
+        }
+    elif path == "/api/grade":
+        marks_str = query.get("marks", [""])[0] if query else ""
+        try:
+            marks = float(marks_str)
+            grade = get_grade(marks)
+            return {
+                "statusCode": 200,
+                "headers": {"Content-Type": "application/json"},
+                "body": json.dumps(grade)
+            }
+        except (ValueError, TypeError):
+            return {
+                "statusCode": 400,
+                "headers": {"Content-Type": "application/json"},
+                "body": json.dumps({"error": "Invalid marks value"})
+            }
+    elif path.startswith("/api/students/") and len(path) > 16:
+        reg_no = path[len("/api/students/"):]
+        student = get_student(reg_no)
+        if student:
+            return {
+                "statusCode": 200,
+                "headers": {"Content-Type": "application/json"},
+                "body": json.dumps(student)
+            }
+        else:
+            return {
+                "statusCode": 404,
+                "headers": {"Content-Type": "application/json"},
+                "body": json.dumps({"error": "Student not found"})
+            }
+    elif path.startswith("/api/marks/") and len(path) > 11:
+        reg_no = path[len("/api/marks/"):]
+        student_marks = load_json_file(MARKS_FILE).get(reg_no, {})
+        return {
+            "statusCode": 200,
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps(student_marks)
+        }
+    elif path.startswith("/api/performance/") and len(path) > 19:
+        reg_no = path[len("/api/performance/"):]
+        perf = calculate_student_performance(reg_no)
+        return {
+            "statusCode": 200,
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps(perf)
+        }
+    else:
+        return {
+            "statusCode": 404,
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps({"error": "Not found"})
+        }
+
+
+# Expose 'handler' at module top-level for Vercel Python runtime
+# This is the variable Vercel looks for in Python serverless functions
+handler = handler
+
+if __name__ == "__main__":
+    run_server()
 
 
 if __name__ == "__main__":
