@@ -22,7 +22,7 @@
   "routes": [
     {
       "source": "/api/(.*)",
-      "dest": "/api/$1"
+      "dest": "/api/main"
     },
     {
       "source": "/(.*)",
