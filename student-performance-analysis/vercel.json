@@ -1,8 +1,5 @@
 {
   "framework": "python",
-  "python": {
-    "runtime": "python3.11"
-  },
   "headers": [
     {
       "source": "/(.*)",
