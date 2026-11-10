@@ -5,6 +5,11 @@
 A Python-based academic management and performance analysis system designed to manage student records, process academic marks, calculate grades, and generate meaningful academic performance reports.
 
 ---
+| No. | Group Member | Registration Number |
+|---|---|---|
+| 1 | ANTONY SIFUNA | COM/B/01-02365/2024 |
+| 2 | DENVER WALUSALA | COM/B/01-03766/2024 |
+| 3 | SULEIMAN IBRAHIM MUHAMED | COM/B/01-05865/2024 |
 
 ## Project Overview
 
