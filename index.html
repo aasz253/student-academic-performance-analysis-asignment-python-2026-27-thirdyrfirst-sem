@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAPAS - Student Academic Performance Analysis System</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <header>
+        <div class="container header-inner">
+            <a href="/" class="logo-area" id="logo-home">
+                <span class="logo-icon">🎓</span>
+                <div class="logo-text">
+                    <h1>SAPAS</h1>
+                    <p>Student Academic Performance Analysis System</p>
+                </div>
+            </a>
+            <div class="user-nav">
+                <!-- Logged Out Status -->
+                <div id="nav-guest" style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #cbd5e1;">
+                    <span>🔒 Official Student Portal</span>
+                </div>
+                <!-- Logged In Status -->
+                <div id="nav-user" style="display: none; align-items: center; gap: 1rem;">
+                    <div class="user-badge">
+                        <span>👤</span>
+                        <strong id="nav-student-name">Student</strong>
+                        <span id="nav-student-reg" style="opacity: 0.8; font-size: 0.8rem;">(REG)</span>
+                    </div>
+                    <button class="btn-logout" id="btn-logout" title="Sign out of student portal">Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- ============================================================== -->
+        <!-- VIEW 1: LANDING & IMPORTANCE PAGE (BEFORE LOGIN)                -->
+        <!-- ============================================================== -->
+        <section id="landing-section" class="landing-view">
+            <!-- Hero Grid: Value Proposition + Login Card -->
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <h2>Empowering Students Through Transparent Academic Analytics</h2>
+                    <p class="lead">
+                        Welcome to the official <strong>Student Academic Performance Analysis System (SAPAS)</strong>. 
+                        A modern, centralized academic platform that enables students to monitor examination performance, 
+                        understand grade standings, and track progress toward graduation with complete clarity.
+                    </p>
+                    <div class="hero-highlights">
+                        <div class="highlight-item">
+                            <span class="highlight-icon">✓</span>
+                            <span>Verified semester examination records across all enrolled units</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">✓</span>
+                            <span>Automated grade calculations and honours degree classification</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">✓</span>
+                            <span>Subject-level diagnostic insights and class cohort benchmarking</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">✓</span>
+                            <span>Instant generation of official, verifiable academic performance reports</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Student Login Card -->
+                <div class="login-card">
+                    <h3>Student Portal Sign In</h3>
+                    <p class="subtitle">Please enter your student registration number or full name to view your personalized academic data.</p>
+                    
+                    <div id="login-error" class="error-alert"></div>
+
+                    <form id="student-login-form">
+                        <div class="form-group">
+                            <label for="student-identifier">Registration Number or Student Name</label>
+                            <input 
+                                type="text" 
+                                id="student-identifier" 
+                                class="form-control" 
+                                placeholder="e.g. REG-20261110-89F4 or Alice Smith" 
+                                autocomplete="off"
+                                required
+                            />
+                        </div>
+                        <button type="submit" class="btn-primary" id="btn-signin">
+                            Access Academic Dashboard →
+                        </button>
+                    </form>
+
+                    <!-- Quick Demo Access for Evaluators & Testers -->
+                    <div class="demo-credentials">
+                        <p>Quick Demo Student Access:</p>
+                        <div class="demo-pills">
+                            <button type="button" class="demo-pill" data-ident="REG-20261110-89F4">
+                                Alice Smith (First Class - 85%)
+                            </button>
+                            <button type="button" class="demo-pill" data-ident="REG-20261110-8D7A">
+                                Bob Jones (Pass - 55%)
+                            </button>
+                            <button type="button" class="demo-pill" data-ident="REG-20261110-D641">
+                                Carol White (Needs Improvement - 23%)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Importance of Website Section -->
+            <div class="section-title">
+                <h3>Why SAPAS? The Importance of Academic Performance Analysis</h3>
+                <p>
+                    Traditional manual record management is slow, prone to computational errors, and leaves students uncertain about their academic standing. 
+                    SAPAS bridges this gap with comprehensive automation and statistical rigor.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">📈</div>
+                    <h4>Centralized & Error-Free Tracking</h4>
+                    <p>
+                        Consolidates all coursework, continuous assessments, and final examination marks in one trusted repository, eliminating grade calculation discrepancies.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">🏆</div>
+                    <h4>Standardized Honours Classification</h4>
+                    <p>
+                        Instantly maps semester averages to university honours standards (First Class, Second Class Upper/Lower, Third Class, or Fail), removing ambiguity about degree standing.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">🎯</div>
+                    <h4>Diagnostic Subject Analytics</h4>
+                    <p>
+                        Highlights individual unit strengths and identifies academic units where tutoring, remedial study, or focused revision is required before final degree audit.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">📄</div>
+                    <h4>Instant Verified Transcripts</h4>
+                    <p>
+                        Generates verified, printable student academic performance reports complete with course codes, unit titles, marks, and remarks for scholarship or academic advising.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Standardized University Grading Scale Reference -->
+            <div class="scale-section">
+                <h3>Official University Grading System</h3>
+                <div class="scale-grid">
+                    <div class="scale-card grade-a">
+                        <div class="scale-grade">Grade A</div>
+                        <div class="scale-marks">70% – 100%</div>
+                        <div class="scale-class">First Class Honours (Excellent)</div>
+                    </div>
+                    <div class="scale-card grade-b">
+                        <div class="scale-grade">Grade B</div>
+                        <div class="scale-marks">60% – 69%</div>
+                        <div class="scale-class">Second Class Honours Upper</div>
+                    </div>
+                    <div class="scale-card grade-c">
+                        <div class="scale-grade">Grade C</div>
+                        <div class="scale-marks">50% – 59%</div>
+                        <div class="scale-class">Second Class Honours Lower</div>
+                    </div>
+                    <div class="scale-card grade-d">
+                        <div class="scale-grade">Grade D</div>
+                        <div class="scale-marks">40% – 49%</div>
+                        <div class="scale-class">Pass / Satisfactory</div>
+                    </div>
+                    <div class="scale-card grade-e">
+                        <div class="scale-grade">Grade E</div>
+                        <div class="scale-marks">0% – 39%</div>
+                        <div class="scale-class">Fail / Requires Remediation</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- VIEW 2: AUTHENTICATED STUDENT DASHBOARD (AFTER LOGIN)          -->
+        <!-- ============================================================== -->
+        <section id="dashboard-section" class="student-dashboard-view">
+            <!-- Student Header Profile Banner -->
+            <div class="dashboard-header">
+                <div class="dashboard-title">
+                    <h2>Welcome, <span id="dash-student-name">Student</span>! 👋</h2>
+                    <p>
+                        Registration: <strong id="dash-student-reg">REG-XXXX</strong> | 
+                        Academic Year: <span id="dash-student-year">2024/2025</span> | 
+                        Status: <span id="dash-student-status" style="color: #047857; font-weight: 600;">Active Enrolled</span>
+                    </p>
+                </div>
+                <div class="dashboard-actions">
+                    <button class="btn-secondary" id="btn-print-report">
+                        📄 View & Print Report
+                    </button>
+                    <button class="btn-secondary" id="btn-refresh-data">
+                        🔄 Refresh Data
+                    </button>
+                </div>
+            </div>
+
+            <!-- Key Performance Indicators (KPIs) -->
+            <div class="kpi-grid">
+                <div class="kpi-card kpi-blue">
+                    <div class="kpi-label">Overall Average</div>
+                    <div class="kpi-val" id="kpi-average">0.0%</div>
+                    <div class="kpi-sub" id="kpi-total-marks">Total Marks: 0.0</div>
+                </div>
+
+                <div class="kpi-card kpi-green">
+                    <div class="kpi-label">Overall Grade</div>
+                    <div class="kpi-val" id="kpi-grade">-</div>
+                    <div class="kpi-sub" id="kpi-grade-remarks">Standing</div>
+                </div>
+
+                <div class="kpi-card kpi-amber">
+                    <div class="kpi-label">Degree Classification</div>
+                    <div class="kpi-val" id="kpi-classification" style="font-size: 1.45rem;">-</div>
+                    <div class="kpi-sub">Official Academic Standing</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-label">Units Completed</div>
+                    <div class="kpi-val" id="kpi-units-passed">0</div>
+                    <div class="kpi-sub" id="kpi-units-failed">0 Failed units</div>
+                </div>
+            </div>
+
+            <!-- Visual Charts -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h4>📊 Unit Examination Marks Breakdown</h4>
+                    <div class="chart-container">
+                        <canvas id="studentUnitsChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <h4>⚖️ Your Performance vs. Class Average</h4>
+                    <div class="chart-container">
+                        <canvas id="studentComparisonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Unit Marks Records Table -->
+            <div class="table-card">
+                <h4>📋 Enrolled Academic Units & Examination Records</h4>
+                <div style="overflow-x: auto;">
+                    <table class="records-table">
+                        <thead>
+                            <tr>
+                                <th>Unit Code</th>
+                                <th>Unit Title</th>
+                                <th>Marks (/100)</th>
+                                <th>Grade</th>
+                                <th>Academic Remarks</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="student-marks-tbody">
+                            <!-- Populated dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for Official Student Performance Report -->
+    <div id="report-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h3 style="color: #1e3a8a; margin: 0;">Official Academic Performance Report</h3>
+                    <p style="color: #64748b; font-size: 0.85rem; margin-top: 0.25rem;">Student Academic Performance Analysis System (SAPAS)</p>
+                </div>
+                <button class="modal-close" id="btn-close-report" title="Close">✕</button>
+            </div>
+            
+            <div id="report-modal-body">
+                <!-- Dynamic Report Content -->
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem; border-top: 1px solid #e2e8f0; padding-top: 1.25rem;">
+                <button class="btn-secondary" id="btn-close-report-footer">Close</button>
+                <button class="btn-primary" style="width: auto; padding: 0.6rem 1.5rem;" onclick="window.print()">🖨️ Print Transcript</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p><strong>Student Academic Performance Analysis System (SAPAS)</strong> • Version 3 Web Edition</p>
+            <p>Designed for academic tracking, automatic grade evaluation, and student academic performance insights.</p>
+        </div>
+    </footer>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

@@ -4,6 +4,12 @@ Tests the get_grade function with various marks values.
 """
 
 import unittest
+import os
+import sys
+
+# Add project root to path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from grading import get_grade
 
 

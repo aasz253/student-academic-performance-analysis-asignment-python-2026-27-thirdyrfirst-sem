@@ -1,0 +1,8 @@
+# SAPAS - Python Standard Library Only
+# No third-party dependencies required for core functionality
+# For Vercel deployment, Python 3.11+ with stdlib is sufficient
+
+# Optional: for enhanced features, install:
+# fastapi
+# uvicorn
+# matplotlib (for charts)

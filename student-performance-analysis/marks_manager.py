@@ -80,18 +80,17 @@ def update_marks(reg_no, unit_code, new_marks):
 
         marks_data = get_marks()
 
-        key = f"{reg_no}_{unit_code}"
-        if key not in marks_data:
+        if reg_no not in marks_data or unit_code not in marks_data[reg_no]:
                 return None
 
-        marks_data[key]["marks"] = new_marks_float
+        marks_data[reg_no][unit_code] = new_marks_float
 
         grade_info = get_grade(new_marks_float)
-        marks_data[key]["grade"] = grade_info["grade"]
-        marks_data[key]["remarks"] = grade_info["remarks"]
+        marks_data[reg_no][f"{unit_code}_grade"] = grade_info["grade"]
+        marks_data[reg_no][f"{unit_code}_remarks"] = grade_info["remarks"]
 
         save_marks(marks_data)
-        return marks_data[key]
+        return marks_data[reg_no]
 
 
 def view_marks_by_student(reg_no):

@@ -1,20 +1,24 @@
-"""Vercel serverless function entrypoint for SAPAS API.
-
-Re-exports the handler from the root api.py so Vercel's Python runtime
-finds a top-level `handler` variable under the api/ directory, as expected
-by the /api/(.*) route in vercel.json.
-"""
-
+"""Vercel serverless function entrypoint for SAPAS API."""
 import importlib.util
 import os
+import sys
 
-# Load the root api.py module by file path (api/ is now a package, so
-# a normal import would resolve to this package instead of root api.py)
-project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-api_py_path = os.path.join(project_root, "api.py")
+_dir = os.path.dirname(os.path.abspath(__file__))
+_project_root = os.path.dirname(_dir)
 
-spec = importlib.util.spec_from_file_location("sapas_root_api", api_py_path)
-root_api = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(root_api)
+_api_file = os.path.join(_project_root, "api.py")
+if not os.path.exists(_api_file):
+    _sub_api = os.path.join(_project_root, "student-performance-analysis", "api.py")
+    if os.path.exists(_sub_api):
+        _api_file = _sub_api
+        _project_root = os.path.join(_project_root, "student-performance-analysis")
 
-handler = root_api.handler  # re-exported for Vercel
+if _project_root not in sys.path:
+    sys.path.insert(0, _project_root)
+
+_spec = importlib.util.spec_from_file_location("sapas_api_root", _api_file)
+_mod = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_mod)
+
+handler = _mod.handler
+__all__ = ["handler"]

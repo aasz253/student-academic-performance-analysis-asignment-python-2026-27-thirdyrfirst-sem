@@ -1,32 +1,9 @@
 {
-  "framework": "python",
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate"
-        },
-        {
-          "key": "Pragma",
-          "value": "no-cache"
-        },
-        {
-          "key": "Expires",
-          "value": "0"
-        }
-      ]
-    }
-  ],
-  "routes": [
+  "version": 2,
+  "rewrites": [
     {
       "source": "/api/(.*)",
-      "dest": "/api/main"
-    },
-    {
-      "source": "/(.*)",
-      "dest": "/index.html"
+      "destination": "/api/main.py"
     }
   ]
 }

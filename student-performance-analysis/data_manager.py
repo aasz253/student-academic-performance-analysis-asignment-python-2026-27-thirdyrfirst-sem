@@ -40,7 +40,7 @@ def ensure_data_dirs():
                 units_path.write_text("{}")
 
         if not marks_path.exists():
-                marks_path.write_text("{")
+                marks_path.write_text("{}")
 
 
 def load_json(filepath):
