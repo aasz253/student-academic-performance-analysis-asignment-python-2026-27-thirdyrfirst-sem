@@ -14,7 +14,12 @@ A Python-based academic management and performance analysis system designed to m
 ## Project Overview
 
 The **Student Academic Performance Analysis System (SAPAS)** is a database-driven Python application developed as a group assignment for the BCS 360 Introduction to Python course.
-![Student Performance Analysis Screenshot](screenshots/Screenshot%20From%202026-11-10%2015-31-29.png)
+
+### Web Interface
+
+![SAPAS landing page with student sign-in](screenshots/sapas-landing.png)
+
+![SAPAS student dashboard with performance analytics](screenshots/sapas-dashboard.png)
 
 The system aims to simplify academic performance tracking by providing tools for student registration, academic unit management, marks recording, automatic grading, student ranking, and class performance analysis.
 
