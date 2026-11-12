@@ -1,0 +1,46 @@
+{
+  "REG-20261110-89F4": {
+    "MTH101": 85.0,
+    "MTH101_grade": "A",
+    "MTH101_remarks": "Excellent",
+    "PHY101": 78.0,
+    "PHY101_grade": "A",
+    "PHY101_remarks": "Excellent",
+    "CHE101": 92.0,
+    "CHE101_grade": "A",
+    "CHE101_remarks": "Excellent"
+  },
+  "REG-20261110-8D7A": {
+    "MTH101": 55.0,
+    "MTH101_grade": "C",
+    "MTH101_remarks": "Good",
+    "PHY101": 42.0,
+    "PHY101_grade": "D",
+    "PHY101_remarks": "Pass",
+    "CHE101": 68.0,
+    "CHE101_grade": "B",
+    "CHE101_remarks": "Very Good"
+  },
+  "REG-20261110-D641": {
+    "MTH101": 30.0,
+    "MTH101_grade": "E",
+    "MTH101_remarks": "Fail",
+    "PHY101": 25.0,
+    "PHY101_grade": "E",
+    "PHY101_remarks": "Fail",
+    "CHE101": 15.0,
+    "CHE101_grade": "E",
+    "CHE101_remarks": "Fail"
+  },
+  "COM/B/01-02365/2024": {
+    "MTH101": 75.0,
+    "MTH101_grade": "A",
+    "MTH101_remarks": "Excellent",
+    "PHY101": 68.0,
+    "PHY101_grade": "B",
+    "PHY101_remarks": "Very Good",
+    "CHE101": 82.0,
+    "CHE101_grade": "A",
+    "CHE101_remarks": "Excellent"
+  }
+}

@@ -27,6 +27,17 @@ It transforms raw academic marks into structured information that can help stude
 
 The initial implementation focuses on a Python command-line interface, with an architecture designed to support future integration with a web-based interface using HTML, CSS, JavaScript, and a Python backend API.
 
+## Demo / Test Credentials
+
+The following student accounts are preloaded and can be used to sign in to the web portal. Enter either the registration number or the student's full name. The `COM/B/01-02365/2024` test account is also available as a one-click button on the landing page.
+
+| Registration Number | Student Name | Average | Classification |
+|---|---|---|---|
+| `COM/B/01-02365/2024` | Demo Student | 75.00% | First Class |
+| `REG-20261110-89F4` | Alice Smith | 85.00% | First Class |
+| `REG-20261110-8D7A` | Bob Jones | 55.00% | Second Class Lower |
+| `REG-20261110-D641` | Carol White | 23.33% | Fail |
+
 ## Project Objectives
 
 1. Develop a functional academic performance management system using Python.

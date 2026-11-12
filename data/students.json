@@ -20,11 +20,11 @@
     "courses": [],
     "date_registered": "2026-11-10T11:02:59.276944"
   },
-  "REG-20261110-0001": {
-    "registration_number": "REG-20261110-0001",
-    "name": "Test Student",
+  "COM/B/01-02365/2024": {
+    "registration_number": "COM/B/01-02365/2024",
+    "name": "Demo Student",
     "academic_year": "2024/2025",
     "courses": [],
-    "date_registered": "2024-01-01T00:00:00+00:00"
+    "date_registered": "2026-11-12T00:00:00"
   }
 }

@@ -7,11 +7,7 @@ __pycache__/
 *.pyd
 .Python
 
-# Data files (generated at runtime - not tracked in git)
-data/students.json
-data/units.json
-data/marks.json
-
+# Seeded demo data is tracked so deployments always include working test accounts
 # Reports (generated at runtime)
 reports/*.txt
 

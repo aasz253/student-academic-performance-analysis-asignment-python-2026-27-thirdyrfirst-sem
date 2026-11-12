@@ -1,0 +1,22 @@
+{
+  "MTH101": {
+    "unit_code": "MTH101",
+    "unit_name": "Mathematics I",
+    "assigned_students": []
+  },
+  "PHY101": {
+    "unit_code": "PHY101",
+    "unit_name": "Physics I",
+    "assigned_students": []
+  },
+  "CHE101": {
+    "unit_code": "CHE101",
+    "unit_name": "Chemistry",
+    "assigned_students": []
+  },
+  "CHEM101": {
+    "unit_code": "CHEM101",
+    "unit_name": "Chemistry",
+    "assigned_students": []
+  }
+}

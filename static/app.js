@@ -149,7 +149,7 @@ function showLoginError(msg) {
  */
 async function fetchStudentData(regNo) {
     try {
-        const response = await fetch(`/api/student-summary/${encodeURIComponent(regNo)}`);
+        const response = await fetch(`/api/student-summary?registration=${encodeURIComponent(regNo)}`);
         if (response.ok) {
             const summary = await response.json();
             currentStudentSummary = summary;

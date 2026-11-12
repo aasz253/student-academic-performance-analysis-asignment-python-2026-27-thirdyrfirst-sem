@@ -32,9 +32,15 @@
     "CHE101_grade": "E",
     "CHE101_remarks": "Fail"
   },
-  "REG-20261110-0001": {
-    "MTH101": 85.0,
+  "COM/B/01-02365/2024": {
+    "MTH101": 75.0,
     "MTH101_grade": "A",
-    "MTH101_remarks": "Excellent"
+    "MTH101_remarks": "Excellent",
+    "PHY101": 68.0,
+    "PHY101_grade": "B",
+    "PHY101_remarks": "Very Good",
+    "CHE101": 82.0,
+    "CHE101_grade": "A",
+    "CHE101_remarks": "Excellent"
   }
 }

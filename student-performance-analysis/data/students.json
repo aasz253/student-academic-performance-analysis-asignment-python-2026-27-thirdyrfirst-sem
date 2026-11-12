@@ -1,0 +1,30 @@
+{
+  "REG-20261110-89F4": {
+    "registration_number": "REG-20261110-89F4",
+    "name": "Alice Smith",
+    "academic_year": "2024/2025",
+    "courses": [],
+    "date_registered": "2026-11-10T11:02:59.265865"
+  },
+  "REG-20261110-8D7A": {
+    "registration_number": "REG-20261110-8D7A",
+    "name": "Bob Jones",
+    "academic_year": "2024/2025",
+    "courses": [],
+    "date_registered": "2026-11-10T11:02:59.266334"
+  },
+  "REG-20261110-D641": {
+    "registration_number": "REG-20261110-D641",
+    "name": "Carol White",
+    "academic_year": "2024/2025",
+    "courses": [],
+    "date_registered": "2026-11-10T11:02:59.276944"
+  },
+  "COM/B/01-02365/2024": {
+    "registration_number": "COM/B/01-02365/2024",
+    "name": "Demo Student",
+    "academic_year": "2024/2025",
+    "courses": [],
+    "date_registered": "2026-11-12T00:00:00"
+  }
+}

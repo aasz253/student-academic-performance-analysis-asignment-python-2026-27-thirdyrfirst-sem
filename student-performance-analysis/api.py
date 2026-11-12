@@ -16,7 +16,7 @@ import shutil
 import tempfile
 from datetime import datetime
 from http.server import HTTPServer, BaseHTTPRequestHandler
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import urlparse, parse_qs, unquote
 from typing import Dict, Any, Optional
 
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -63,6 +63,13 @@ def get_data_dir() -> str:
 def get_file_path(filename: str) -> str:
     """Return the active path for a data file."""
     return os.path.join(get_data_dir(), filename)
+
+
+def path_remainder(path: str, marker: str) -> str:
+    """Return the decoded part of a path after marker (supports slashes in registration numbers)."""
+    if marker in path:
+        return unquote(path.split(marker, 1)[1]).strip("/")
+    return ""
 
 
 def load_json_file(filepath: str) -> dict:
@@ -443,8 +450,17 @@ def handle_event(event: dict, context=None) -> dict:
             return {"statusCode": 401, "headers": headers, "body": json.dumps({"success": False, "error": "Student registration number not found."})}
         return {"statusCode": 405, "headers": headers, "body": json.dumps({"error": "Method not allowed"})}
 
+    elif clean_path in ["/api/student-summary", "/student-summary"]:
+        reg_no = query.get("registration") or query.get("reg_no") or ""
+        if isinstance(reg_no, list):
+            reg_no = reg_no[0] if reg_no else ""
+        summary = get_student_summary(unquote(str(reg_no)))
+        if summary:
+            return {"statusCode": 200, "headers": headers, "body": json.dumps(summary)}
+        return {"statusCode": 404, "headers": headers, "body": json.dumps({"error": "Student summary not found"})}
+
     elif clean_path.startswith("/api/student-summary/") or clean_path.startswith("/student-summary/"):
-        reg_no = clean_path.split("/")[-1]
+        reg_no = path_remainder(clean_path, "student-summary/")
         summary = get_student_summary(reg_no)
         if summary:
             return {"statusCode": 200, "headers": headers, "body": json.dumps(summary)}
@@ -462,7 +478,7 @@ def handle_event(event: dict, context=None) -> dict:
         return {"statusCode": 200, "headers": headers, "body": json.dumps(get_all_students())}
 
     elif clean_path.startswith("/api/students/") or clean_path.startswith("/students/"):
-        reg_no = clean_path.split("/")[-1]
+        reg_no = path_remainder(clean_path, "students/")
         student = get_student(reg_no)
         if student:
             return {"statusCode": 200, "headers": headers, "body": json.dumps(student)}
@@ -493,11 +509,11 @@ def handle_event(event: dict, context=None) -> dict:
         return {"statusCode": 200, "headers": headers, "body": json.dumps(get_all_marks())}
 
     elif clean_path.startswith("/api/marks/") or clean_path.startswith("/marks/"):
-        reg_no = clean_path.split("/")[-1]
+        reg_no = path_remainder(clean_path, "marks/")
         return {"statusCode": 200, "headers": headers, "body": json.dumps(get_student_marks(reg_no))}
 
     elif clean_path.startswith("/api/performance/") or clean_path.startswith("/performance/"):
-        reg_no = clean_path.split("/")[-1]
+        reg_no = path_remainder(clean_path, "performance/")
         return {"statusCode": 200, "headers": headers, "body": json.dumps(calculate_student_performance(reg_no))}
 
     elif clean_path in ["/api/class", "/class"]:
@@ -612,8 +628,14 @@ class handler(BaseHTTPRequestHandler, metaclass=HandlerMeta):
         sub_endpoint = path_parts[0] if len(path_parts) > 0 else ""
         param = path_parts[1] if len(path_parts) > 1 else None
 
-        if sub_endpoint in ["student-summary", "summary"] and param:
-            summary = get_student_summary(param)
+        if sub_endpoint in ["student-summary", "summary"]:
+            reg_no = path_remainder(api_path, sub_endpoint + "/")
+            if not reg_no and "registration" in query:
+                reg_no = query["registration"][0]
+            if not reg_no:
+                self.send_json(400, {"error": "Registration number required"})
+                return
+            summary = get_student_summary(reg_no)
             if summary:
                 self.send_json(200, summary)
             else:
@@ -621,8 +643,9 @@ class handler(BaseHTTPRequestHandler, metaclass=HandlerMeta):
             return
 
         elif sub_endpoint == "students":
-            if param:
-                student = get_student(param)
+            reg_no = path_remainder(api_path, "students/")
+            if reg_no:
+                student = get_student(reg_no)
                 if student:
                     self.send_json(200, student)
                 else:
@@ -643,8 +666,9 @@ class handler(BaseHTTPRequestHandler, metaclass=HandlerMeta):
             return
 
         elif sub_endpoint == "marks":
-            if param:
-                self.send_json(200, get_student_marks(param))
+            reg_no = path_remainder(api_path, "marks/")
+            if reg_no:
+                self.send_json(200, get_student_marks(reg_no))
             elif "registration" in query:
                 reg = query["registration"][0]
                 self.send_json(200, get_student_marks(reg))
@@ -652,8 +676,12 @@ class handler(BaseHTTPRequestHandler, metaclass=HandlerMeta):
                 self.send_json(200, get_all_marks())
             return
 
-        elif sub_endpoint == "performance" and param:
-            perf = calculate_student_performance(param)
+        elif sub_endpoint == "performance":
+            reg_no = path_remainder(api_path, "performance/")
+            if not reg_no:
+                self.send_json(400, {"error": "Registration number required"})
+                return
+            perf = calculate_student_performance(reg_no)
             self.send_json(200, perf)
             return
 
@@ -733,7 +761,7 @@ class handler(BaseHTTPRequestHandler, metaclass=HandlerMeta):
             return
 
         elif sub_endpoint == "students":
-            reg_no = param or body.get("registration_number", "")
+            reg_no = path_remainder(api_path, "students/") or body.get("registration_number", "")
             name = body.get("name", "")
             academic_year = body.get("academic_year", "2024/2025")
             if not reg_no or not name:
@@ -754,7 +782,7 @@ class handler(BaseHTTPRequestHandler, metaclass=HandlerMeta):
             return
 
         elif sub_endpoint == "marks":
-            reg_no = body.get("registration_number") or param or ""
+            reg_no = body.get("registration_number") or path_remainder(api_path, "marks/")
             unit_code = body.get("unit_code", "")
             marks_val = body.get("marks")
             if not reg_no or not unit_code or marks_val is None:
