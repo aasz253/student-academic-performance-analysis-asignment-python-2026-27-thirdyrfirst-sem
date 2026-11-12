@@ -23,3 +23,10 @@ _spec.loader.exec_module(_mod)
 for _k, _v in _mod.__dict__.items():
     if not _k.startswith("__"):
         globals()[_k] = _v
+
+
+class handler(_mod.handler):
+    """Vercel requires a statically defined top-level `handler` class."""
+
+
+__all__ = ["handler"]

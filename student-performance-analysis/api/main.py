@@ -20,5 +20,9 @@ _spec = importlib.util.spec_from_file_location("sapas_api_root", _api_file)
 _mod = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_mod)
 
-handler = _mod.handler
+
+class handler(_mod.handler):
+    """Vercel requires a statically defined top-level `handler` class."""
+
+
 __all__ = ["handler"]
